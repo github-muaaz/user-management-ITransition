@@ -10,8 +10,8 @@ import history from "../router/history";
 import Modal from "../component/modal";
 
 const Users = () => {
-    const [page, setPage] = useState(0);
-    const [size, setSize] = useState(10);
+    const [page] = useState(0);
+    const [size] = useState(10);
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelected] = useState([]);
 
