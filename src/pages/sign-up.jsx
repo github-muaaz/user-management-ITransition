@@ -1,13 +1,10 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
 
 import LoginImage from "../assets/images/login.webp";
 import Api from "../service/api";
 
 const SignUp = () => {
-
-    const navigate = useNavigate();
 
     const [errors, setErrors] = useState({});
 

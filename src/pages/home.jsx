@@ -2,9 +2,12 @@ import {Link} from "react-router-dom";
 
 import storage from "../store/local-storage";
 import configJson from "../config.json";
+
 const Home = () => {
 
-    const { user: currentUser } = storage.get(configJson.storageKey);
+    const storeItem = storage.get(configJson.storageKey);
+
+    const currentUser = storeItem?.user;
 
     return (
         <div className="container">
@@ -14,7 +17,7 @@ const Home = () => {
 
                     <div className={'row'}>
                         {currentUser
-                            ? <h4>Hello, {currentUser.name}</h4>
+                            ? <h4>Hello, {currentUser?.name}</h4>
                             : <h4>Please, Login or Sign Up</h4>
                         }
                     </div>

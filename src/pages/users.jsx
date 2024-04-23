@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
 
 import BlockSvg from "../assets/icons/block.svg";
@@ -15,7 +15,9 @@ const Users = () => {
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelected] = useState([]);
 
-    const {user: currentUser} = storage.get(configJson.storageKey);
+    const storeItem = storage.get(configJson.storageKey);
+
+    const currentUser = storeItem?.user;
 
     useEffect(() => {
         Api.FetchData(`/user/list/${page}/${size}`)
@@ -100,81 +102,78 @@ const Users = () => {
 
     return (
         <div className="container">
-            <Modal onAccepted={handleLogout} targetId={'logoutModal'}/>
+            <Modal onAccepted={handleLogout} targetId={'logoutModal'} />
 
             <div className="row mb-5 mt-5">
-                <div className="col-9">
+                <div className="col-md-9">
                     <h1>Users list</h1>
                 </div>
 
-                <div className="col-3">
-                    <div className="row align-items-center">
-                        <h5 className="col">Hello, {currentUser?.name}!</h5>
-
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal"
-                                className="col btn btn-outline-danger">Logout
-                        </button>
-                    </div>
+                <div className="col-md-3 d-flex align-items-center justify-content-end">
+                    <div className="me-3">Hello, {currentUser?.name}!</div>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#logoutModal" className="btn btn-outline-danger">Logout</button>
                 </div>
             </div>
 
             <div className="mb-4 row justify-content-end">
-                <div className="col-1">
+                <div className="col-md-1">
                     <button type="button" onClick={handleBlock} className="btn btn-danger">Block</button>
                 </div>
-                <div className="col-1">
-                    <img className="btn" onClick={handleUnblock} src={BlockSvg} alt="unBlock icon"/>
+                <div className="col-md-1">
+                    <img className="btn" onClick={handleUnblock} src={BlockSvg} alt="unBlock icon" />
                 </div>
-                <div className="col-1">
-                    <img className="btn" onClick={handleDelete} src={DeleteSvg} alt="unBlock icon"/>
+                <div className="col-md-1">
+                    <img className="btn" onClick={handleDelete} src={DeleteSvg} alt="unBlock icon" />
                 </div>
             </div>
 
-            <table className="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            checked={selectedUsers.length === users?.length}
-                            onChange={handleSelectAll}
-                            id="flexCheckAll"
-                        />
-                    </th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Last Login Time</th>
-                    <th scope="col">Registration Time</th>
-                    <th scope="col">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                {users.map(user => (
-                    <tr onClick={() => handleClick(user.id)} key={user.id}>
-                        <th scope="row">
+            <div className="table-responsive">
+                <table className="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">
                             <input
-                                className="form-check-input"
-                                checked={selectedUsers.includes(user.id)}
                                 type="checkbox"
-                                onChange={() => {}}
-                                id={`flexCheck-${user.id}`}
+                                className="form-check-input"
+                                checked={selectedUsers.length === users?.length}
+                                onChange={handleSelectAll}
+                                id="flexCheckAll"
                             />
                         </th>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{moment(user.lastLoginTime).fromNow()}</td>
-                        <td>{moment(user.registrationTime).fromNow()}</td>
-                        <td>
-                            <span className={`badge rounded-pill ${user.status ? 'text-bg-success' : 'text-bg-danger'}`}>
-                                {user.status ? 'Active' : 'Blocked'}
-                            </span>
-                        </td>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Last Login Time</th>
+                        <th scope="col">Registration Time</th>
+                        <th scope="col">Status</th>
                     </tr>
-                ))}
-                </tbody>
+                    </thead>
+                    <tbody>
+                    {users.map(user => (
+                        <tr onClick={() => handleClick(user.id)} key={user.id}>
+                            <th scope="row">
+                                <input
+                                    className="form-check-input"
+                                    checked={selectedUsers.includes(user.id)}
+                                    type="checkbox"
+                                    onChange={() => { }}
+                                    id={`flexCheck-${user.id}`}
+                                />
+                            </th>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{moment(user.lastLoginTime).fromNow()}</td>
+                            <td>{moment(user.registrationTime).fromNow()}</td>
+                            <td>
+                                    <span className={`badge rounded-pill ${user.status ? 'text-bg-success' : 'text-bg-danger'}`}>
+                                        {user.status ? 'Active' : 'Blocked'}
+                                    </span>
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
     )
 }

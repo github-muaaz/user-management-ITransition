@@ -1,4 +1,4 @@
 {
-  "apiEndpoint": "http://localhost:8090/api/v1",
+  "apiEndpoint": "https://user-management-itransition-back-production.up.railway.app/api/v1",
   "storageKey": "persist:storage"
 }
