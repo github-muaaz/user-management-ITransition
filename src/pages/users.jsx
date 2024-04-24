@@ -161,7 +161,7 @@ const Users = () => {
                             </th>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
-                            <td>{moment(user.lastLoginTime).fromNow()}</td>
+                            <td>{moment.utc(user.lastLoginTime).local().fromNow()}</td> {/* Convert to local time zone */}
                             <td>{moment(user.registrationTime).fromNow()}</td>
                             <td>
                                     <span className={`badge rounded-pill ${user.status ? 'text-bg-success' : 'text-bg-danger'}`}>
